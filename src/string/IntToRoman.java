@@ -1,5 +1,8 @@
 package string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *  12. Integer to Roman
  *
@@ -12,71 +15,40 @@ package string;
 public class IntToRoman {
     public String intToRoman(int num) {
         StringBuilder sb = new StringBuilder();
+        Map<Integer, String> map = getMap();
+        int[] arr = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int idx = 0;
 
-        while(num >= 0) {
-            while(num >= 1000) {
-                sb.append("M");
-                num -= 1000;
-            }
+        while(num > 0) {
+            int curr = arr[idx];
 
-            if (num >= 900) {
-                sb.append("CM");
-                num -= 900;
-            } else if (num >= 500) {
-                sb.append("D");
-                num -= 500;
-
-                while(num >= 100) {
-                    sb.append("C");
-                    num -= 100;
-                }
-            } else if (num >= 400) {
-                sb.append("CD");
-                num -= 400;
-            } else if (num >= 100) {
-                while(num >= 100) {
-                    sb.append("C");
-                    num -= 100;
-                }
-            } else if (num >= 90) {
-                sb.append("XC");
-                num -= 90;
-            } else if (num >= 50) {
-                sb.append("L");
-                num -= 50;
-
-                while(num >= 10) {
-                    sb.append("X");
-                    num -= 10;
-                }
-            } else if (num >= 40) {
-                sb.append("XL");
-                num -= 40;
-            } else if (num >= 10) {
-                while(num > 9) {
-                    sb.append("X");
-                    num -= 10;
-                }
-            } else if (num == 9) {
-                sb.append("IX");
-                num -= 9;
-            } else if (num >= 5) {
-                sb.append("V");
-                num -= 5;
-
-                while(num-- > 0) {
-                    sb.append("I");
-                }
-            } else if (num == 4) {
-                sb.append("IV");
-                num -= 4;
+            if (num >= curr) {
+                sb.append(map.get(curr));
+                num -= curr;
             } else {
-                while(num-- != 0) {
-                    sb.append("I");
-                }
+                idx++;
             }
         }
 
         return sb.toString();
+    }
+
+    private Map<Integer, String> getMap() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1000, "M");
+        map.put(900, "CM");
+        map.put(500, "D");
+        map.put(400, "CD");
+        map.put(100, "C");
+        map.put(90, "XC");
+        map.put(50, "L");
+        map.put(40, "XL");
+        map.put(10, "X");
+        map.put(9, "IX");
+        map.put(5, "V");
+        map.put(4, "IV");
+        map.put(1, "I");
+
+        return map;
     }
 }
